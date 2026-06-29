@@ -39,7 +39,9 @@ export function GridView({
             {displayTracks.map((t) => (
               <div key={t.name} className="border-l border-border px-3 py-3">
                 <p className="text-sm font-semibold text-foreground">{t.name}</p>
-                <p className="text-xs text-muted-foreground">{t.room}</p>
+                <p className="font-mono text-xs text-muted-foreground">
+                  {t.roomNumber ? `Room ${t.roomNumber}` : t.room}
+                </p>
               </div>
             ))}
           </div>

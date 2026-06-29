@@ -2,7 +2,7 @@ import { ChevronDown } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { DAYS, type Session } from '#/lib/sessions'
 import { cn } from '#/lib/utils'
-import { Avatar, SocialLinks, StarButton } from '#/components/session-bits'
+import { SocialLinks, StarButton } from '#/components/session-bits'
 
 export function ListView({
   sessions,
@@ -113,6 +113,9 @@ function SessionRow({
         <span className="rounded border border-primary/40 bg-track px-2 py-0.5 text-xs font-medium text-track-foreground">
           {session.track}
         </span>
+        {session.roomNumber && (
+          <span className="font-mono text-xs text-muted-foreground">Room {session.roomNumber}</span>
+        )}
         <span className="font-mono text-sm text-muted-foreground">
           {session.startLabel}-{session.endLabel}
         </span>

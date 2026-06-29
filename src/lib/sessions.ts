@@ -28,6 +28,8 @@ export type Session = {
   /** topic / category tags for sidebar filtering */
   tags: string[]
   level: 'breakout' | 'expo'
+  /** Moscone West room number, present only for Track M and Track 1–9 */
+  roomNumber?: string
 }
 
 export type Day = {
@@ -102,7 +104,20 @@ for (const sp of (speakersData as { speakers: RawSpeaker[] }).speakers) {
 
 const EXPO_ROOM_PREFIX = 'Expo Stage'
 
-export type TrackInfo = { name: string; room: string }
+export type TrackInfo = { name: string; room: string; roomNumber?: string }
+
+export const ROOM_NUMBER_MAP: Record<string, string> = {
+  'Track M': '2001',
+  'Track 1': '2010',
+  'Track 2': '2006',
+  'Track 3': '2002',
+  'Track 4': '2009',
+  'Track 5': '2005',
+  'Track 6': '2014',
+  'Track 7': '2024',
+  'Track 8': '2020',
+  'Track 9': '2016',
+}
 
 // Ordered room lists matching the conference venue layout
 export const BREAKOUT_TRACKS: TrackInfo[] = [
@@ -110,16 +125,16 @@ export const BREAKOUT_TRACKS: TrackInfo[] = [
   { name: 'Leadership Lounge', room: 'Leadership Lounge' },
   { name: 'Leadership 1', room: 'Leadership 1' },
   { name: 'Leadership 2', room: 'Leadership 2' },
-  { name: 'Track M', room: 'Track M' },
-  { name: 'Track 1', room: 'Track 1' },
-  { name: 'Track 2', room: 'Track 2' },
-  { name: 'Track 3', room: 'Track 3' },
-  { name: 'Track 4', room: 'Track 4' },
-  { name: 'Track 5', room: 'Track 5' },
-  { name: 'Track 6', room: 'Track 6' },
-  { name: 'Track 7', room: 'Track 7' },
-  { name: 'Track 8', room: 'Track 8' },
-  { name: 'Track 9', room: 'Track 9' },
+  { name: 'Track M', room: 'Track M', roomNumber: '2001' },
+  { name: 'Track 1', room: 'Track 1', roomNumber: '2010' },
+  { name: 'Track 2', room: 'Track 2', roomNumber: '2006' },
+  { name: 'Track 3', room: 'Track 3', roomNumber: '2002' },
+  { name: 'Track 4', room: 'Track 4', roomNumber: '2009' },
+  { name: 'Track 5', room: 'Track 5', roomNumber: '2005' },
+  { name: 'Track 6', room: 'Track 6', roomNumber: '2014' },
+  { name: 'Track 7', room: 'Track 7', roomNumber: '2024' },
+  { name: 'Track 8', room: 'Track 8', roomNumber: '2020' },
+  { name: 'Track 9', room: 'Track 9', roomNumber: '2016' },
 ]
 
 export const EXPO_TRACKS: TrackInfo[] = [
@@ -138,6 +153,7 @@ type RawSession = {
   day: string
   time: string
   room: string
+  roomNumber?: string
   type: string
   track: string | null
   status: string
@@ -175,6 +191,7 @@ function buildSessions(): Session[] {
       speakers,
       tags,
       level,
+      roomNumber: s.roomNumber,
     }
   })
 }

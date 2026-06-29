@@ -1,4 +1,4 @@
-import { CalendarRange, ChevronRight, FileDown, Globe, LayoutGrid, List, Moon, Sun } from 'lucide-react'
+import { CalendarRange, FileDown, LayoutGrid, List, Moon, Sun } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { DAYS, SESSIONS } from '#/lib/sessions'
 import { useAgenda } from '#/lib/use-agenda'

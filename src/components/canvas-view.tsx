@@ -243,10 +243,13 @@ function TrackRow({
   return (
     <div className="flex items-stretch border-t border-border/60" style={{ height: ROW_HEIGHT }}>
       <div
-        className="flex shrink-0 items-center font-mono text-sm text-foreground"
+        className="flex shrink-0 flex-col justify-center font-mono text-sm text-foreground"
         style={{ width: LABEL_WIDTH }}
       >
-        {label}
+        <span>{label}</span>
+        {sessions[0]?.roomNumber && (
+          <span className="text-[10px] text-muted-foreground">Room {sessions[0].roomNumber}</span>
+        )}
       </div>
       <div className="relative flex-1" style={{ width: timelineWidth }}>
         {sessions.map((s) => {
