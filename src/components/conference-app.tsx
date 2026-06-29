@@ -1,4 +1,4 @@
-import { CalendarRange, ChevronLeft, FileDown, LayoutGrid, List, Moon, Search, Share2, SlidersHorizontal, Sun } from 'lucide-react'
+import { CalendarRange, ChevronLeft, FileDown, LayoutGrid, List, Moon, Search, Share2, SlidersHorizontal, Star, Sun } from 'lucide-react'
 import { useRef, useMemo, useState } from 'react'
 import { DAYS, SESSIONS, type Session } from '#/lib/sessions'
 import { useAgenda } from '#/lib/use-agenda'
@@ -145,6 +145,19 @@ export function ConferenceApp() {
 
           {/* Day tabs */}
           <div className="flex gap-2 overflow-x-auto px-3 pb-3 [scrollbar-width:none]">
+            <button
+              type="button"
+              onClick={() => setStarredOnly(!starredOnly)}
+              className={cn(
+                'flex shrink-0 items-center gap-1 whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-medium transition-colors',
+                starredOnly
+                  ? 'border-primary bg-primary/10 text-primary'
+                  : 'border-border bg-transparent text-foreground hover:bg-accent',
+              )}
+            >
+              <Star className={cn('size-3', starredOnly && 'fill-primary')} />
+              Starred ({count})
+            </button>
             {DAYS.map((day) => {
               const active = selectedDayId === day.id
               return (

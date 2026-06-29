@@ -117,20 +117,22 @@ function SessionRow({
       className="cursor-pointer rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/40"
       onClick={onClick}
     >
-      <div className="flex items-start gap-3">
-        <span className="rounded border border-primary/40 bg-track px-2 py-0.5 text-xs font-medium text-track-foreground">
-          {session.track}
-        </span>
-        {session.roomNumber && (
-          <span className="font-mono text-xs text-muted-foreground">Room {session.roomNumber}</span>
-        )}
-        <span className="font-mono text-sm text-muted-foreground">
-          {session.startLabel}-{session.endLabel}
-        </span>
-        {session.tags.length > 0 && (
-          <span className="text-sm text-muted-foreground">{session.tags[0]}</span>
-        )}
-        <div className="ml-auto">
+      <div className="flex items-start gap-2">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-2 gap-y-1">
+          <span className="rounded border border-primary/40 bg-track px-2 py-0.5 text-xs font-medium text-track-foreground">
+            {session.track}
+          </span>
+          {session.roomNumber && (
+            <span className="font-mono text-xs text-muted-foreground">Room {session.roomNumber}</span>
+          )}
+          <span className="font-mono text-xs text-muted-foreground">
+            {session.startLabel}-{session.endLabel}
+          </span>
+          {session.tags.length > 0 && (
+            <span className="text-xs text-muted-foreground">{session.tags[0]}</span>
+          )}
+        </div>
+        <div className="shrink-0">
           <StarButton starred={starred} onToggle={onToggle} />
         </div>
       </div>
