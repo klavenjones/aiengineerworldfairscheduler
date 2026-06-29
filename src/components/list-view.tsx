@@ -26,7 +26,7 @@ export function ListView({
   }, [sessions.length])
 
   return (
-    <div className="mx-auto max-w-5xl px-6 py-6">
+    <div className="mx-auto max-w-5xl px-3 py-4 sm:px-6 sm:py-6">
       <div className="mb-6 flex flex-wrap items-center gap-3">
         <span className="text-sm font-medium text-muted-foreground">{sessions.length} sessions</span>
         <button

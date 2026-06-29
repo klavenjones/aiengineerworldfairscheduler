@@ -36,7 +36,7 @@ export function Sidebar({
 }: SidebarProps) {
   if (collapsed) {
     return (
-      <aside className="flex w-14 shrink-0 flex-col items-center gap-4 border-r border-sidebar-border bg-sidebar py-4">
+      <aside className="hidden w-14 shrink-0 flex-col items-center gap-4 border-r border-sidebar-border bg-sidebar py-4 md:flex">
         <button
           type="button"
           onClick={() => setCollapsed(false)}
@@ -61,7 +61,7 @@ export function Sidebar({
   }
 
   return (
-    <aside className="flex w-72 shrink-0 flex-col border-r border-sidebar-border bg-sidebar">
+    <aside className="hidden w-72 shrink-0 flex-col border-r border-sidebar-border bg-sidebar md:flex">
       <div className="flex items-center justify-between gap-2 px-5 pt-5">
         <div className="flex flex-col items-center border-2 border-sidebar-foreground px-3 py-1.5 leading-none">
           <span className="text-[10px] font-semibold tracking-[0.15em] text-sidebar-foreground">
