@@ -1,4 +1,4 @@
-import { CalendarRange, ChevronLeft, FileDown, LayoutGrid, List, Moon, Search, Share2, SlidersHorizontal, Star, Sun } from 'lucide-react'
+import { CalendarRange, ChevronLeft, FileDown, LayoutGrid, List, Map, Moon, Search, Share2, SlidersHorizontal, Star, Sun } from 'lucide-react'
 import { useRef, useMemo, useState } from 'react'
 import { DAYS, SESSIONS, type Session } from '#/lib/sessions'
 import { useAgenda } from '#/lib/use-agenda'
@@ -10,6 +10,7 @@ import { GridView } from '#/components/grid-view'
 import { CanvasView } from '#/components/canvas-view'
 import { SessionModal } from '#/components/session-modal'
 import { MobileFilters } from '#/components/mobile-filters'
+import { MapModal } from '#/components/map-modal'
 
 type View = 'list' | 'grid' | 'canvas'
 
@@ -26,6 +27,7 @@ export function ConferenceApp() {
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set())
   const [collapsed, setCollapsed] = useState(false)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [mapOpen, setMapOpen] = useState(false)
   const mainScrollRef = useRef<HTMLElement>(null)
 
   function toggleTag(tag: string) {
@@ -95,6 +97,14 @@ export function ConferenceApp() {
                 className="flex size-8 items-center justify-center rounded-md border border-border bg-card text-foreground transition-colors hover:bg-accent"
               >
                 {theme === 'dark' ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              </button>
+              <button
+                type="button"
+                onClick={() => setMapOpen(true)}
+                aria-label="View venue map"
+                className="flex size-8 items-center justify-center rounded-md border border-border bg-card text-foreground transition-colors hover:bg-accent"
+              >
+                <Map className="size-4" />
               </button>
               <button
                 type="button"
@@ -202,6 +212,14 @@ export function ConferenceApp() {
             </button>
             <button
               type="button"
+              onClick={() => setMapOpen(true)}
+              aria-label="View venue map"
+              className="flex size-9 items-center justify-center rounded-md border border-border bg-card text-foreground transition-colors hover:bg-accent"
+            >
+              <Map className="size-4" />
+            </button>
+            <button
+              type="button"
               onClick={() => window.print()}
               className="hidden items-center gap-1.5 rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent sm:flex"
             >
@@ -260,6 +278,8 @@ export function ConferenceApp() {
         onToggle={() => selectedSession && toggle(selectedSession.id)}
         onClose={() => setSelectedSession(null)}
       />
+
+      {mapOpen && <MapModal onClose={() => setMapOpen(false)} />}
 
       {/* Mobile filters modal */}
       {mobileFiltersOpen && (
