@@ -129,7 +129,7 @@ function SessionRow({
       <div className="mt-3 flex flex-col gap-3">
         {session.speakers.map((sp, i) => (
           <div key={`${sp.name}-${i}`} className="flex items-center gap-3">
-            <Avatar name={sp.name} photoUrl={sp.photoUrl} />
+            {/* <Avatar name={sp.name} photoUrl={sp.photoUrl} /> */}
             <div className="min-w-0">
               <p className="text-sm font-medium text-primary">{sp.name}</p>
               {(sp.role ?? sp.company) && (
