@@ -8,10 +8,12 @@ export function ListView({
   sessions,
   isStarred,
   toggle,
+  onSessionClick,
 }: {
   sessions: Session[]
   isStarred: (id: string) => boolean
   toggle: (id: string) => void
+  onSessionClick: (session: Session) => void
 }) {
   const dayIdsWithSessions = DAYS.filter((d) => sessions.some((s) => s.dayId === d.id))
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set())
@@ -86,6 +88,7 @@ export function ListView({
                       session={s}
                       starred={isStarred(s.id)}
                       onToggle={() => toggle(s.id)}
+                      onClick={() => onSessionClick(s)}
                     />
                   ))}
                 </div>
@@ -102,13 +105,18 @@ function SessionRow({
   session,
   starred,
   onToggle,
+  onClick,
 }: {
   session: Session
   starred: boolean
   onToggle: () => void
+  onClick: () => void
 }) {
   return (
-    <article className="rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/40">
+    <article
+      className="cursor-pointer rounded-lg border border-border bg-card p-4 transition-colors hover:border-primary/40"
+      onClick={onClick}
+    >
       <div className="flex items-start gap-3">
         <span className="rounded border border-primary/40 bg-track px-2 py-0.5 text-xs font-medium text-track-foreground">
           {session.track}

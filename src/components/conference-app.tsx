@@ -1,6 +1,6 @@
 import { CalendarRange, FileDown, LayoutGrid, List, Moon, Sun } from 'lucide-react'
 import { useMemo, useState } from 'react'
-import { DAYS, SESSIONS } from '#/lib/sessions'
+import { DAYS, SESSIONS, type Session } from '#/lib/sessions'
 import { useAgenda } from '#/lib/use-agenda'
 import { cn } from '#/lib/utils'
 import { useTheme } from '#/components/theme-provider'
@@ -8,6 +8,7 @@ import { Sidebar } from '#/components/sidebar'
 import { ListView } from '#/components/list-view'
 import { GridView } from '#/components/grid-view'
 import { CanvasView } from '#/components/canvas-view'
+import { SessionModal } from '#/components/session-modal'
 
 type View = 'list' | 'grid' | 'canvas'
 
@@ -16,6 +17,7 @@ export function ConferenceApp() {
   const { toggle, isStarred, count } = useAgenda()
 
   const [view, setView] = useState<View>('list')
+  const [selectedSession, setSelectedSession] = useState<Session | null>(null)
   const [search, setSearch] = useState('')
   const [semantic, setSemantic] = useState(false)
   const [starredOnly, setStarredOnly] = useState(false)
@@ -138,16 +140,23 @@ export function ConferenceApp() {
           </div> */}
 
           {view === 'list' && (
-            <ListView sessions={filtered} isStarred={isStarred} toggle={toggle} />
+            <ListView sessions={filtered} isStarred={isStarred} toggle={toggle} onSessionClick={setSelectedSession} />
           )}
           {view === 'grid' && (
-            <GridView day={gridDay} sessions={filtered} isStarred={isStarred} toggle={toggle} />
+            <GridView day={gridDay} sessions={filtered} isStarred={isStarred} toggle={toggle} onSessionClick={setSelectedSession} />
           )}
           {view === 'canvas' && (
-            <CanvasView sessions={filtered} isStarred={isStarred} toggle={toggle} />
+            <CanvasView sessions={filtered} isStarred={isStarred} onSessionClick={setSelectedSession} />
           )}
         </main>
       </div>
+
+      <SessionModal
+        session={selectedSession}
+        starred={selectedSession ? isStarred(selectedSession.id) : false}
+        onToggle={() => selectedSession && toggle(selectedSession.id)}
+        onClose={() => setSelectedSession(null)}
+      />
     </div>
   )
 }

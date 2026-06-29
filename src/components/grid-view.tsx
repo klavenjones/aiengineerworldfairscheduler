@@ -7,11 +7,13 @@ export function GridView({
   sessions,
   isStarred,
   toggle,
+  onSessionClick,
 }: {
   day: Day
   sessions: Session[]
   isStarred: (id: string) => boolean
   toggle: (id: string) => void
+  onSessionClick: (session: Session) => void
 }) {
   const daySessions = sessions.filter((s) => s.dayId === day.id)
   // tracks that actually have sessions this day (keep order from ALL_TRACKS)
@@ -66,6 +68,7 @@ export function GridView({
                         accent={i % 2 === 0 ? 'green' : 'blue'}
                         starred={isStarred(session.id)}
                         onToggle={() => toggle(session.id)}
+                        onClick={() => onSessionClick(session)}
                       />
                     )}
                   </div>
@@ -84,16 +87,19 @@ function GridCell({
   accent,
   starred,
   onToggle,
+  onClick,
 }: {
   session: Session
   accent: 'green' | 'blue'
   starred: boolean
   onToggle: () => void
+  onClick: () => void
 }) {
   return (
     <div
+      onClick={onClick}
       className={cn(
-        'flex h-full flex-col gap-1 rounded-md border p-2',
+        'flex h-full cursor-pointer flex-col gap-1 rounded-md border p-2',
         accent === 'green'
           ? 'border-session-green-foreground/20 bg-session-green'
           : 'border-session-blue-foreground/20 bg-session-blue',

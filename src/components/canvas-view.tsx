@@ -19,11 +19,11 @@ function fmtHour(min: number) {
 export function CanvasView({
   sessions,
   isStarred,
-  toggle,
+  onSessionClick,
 }: {
   sessions: Session[]
   isStarred: (id: string) => boolean
-  toggle: (id: string) => void
+  onSessionClick: (session: Session) => void
 }) {
   const [zoom, setZoom] = useState(76)
   const [canvasDay, setCanvasDay] = useState<string>('all')
@@ -126,7 +126,7 @@ export function CanvasView({
               pxPerMin={pxPerMin}
               timelineWidth={timelineWidth}
               isStarred={isStarred}
-              toggle={toggle}
+              onSessionClick={onSessionClick}
             />
           ))}
         </div>
@@ -145,7 +145,7 @@ function DaySection({
   pxPerMin,
   timelineWidth,
   isStarred,
-  toggle,
+  onSessionClick,
 }: {
   day: Day
   sessions: Session[]
@@ -153,7 +153,7 @@ function DaySection({
   pxPerMin: number
   timelineWidth: number
   isStarred: (id: string) => boolean
-  toggle: (id: string) => void
+  onSessionClick: (session: Session) => void
 }) {
   const breakout = BREAKOUT_TRACKS.filter((t) => sessions.some((s) => s.track === t.name))
   const expo = EXPO_TRACKS.filter((t) => sessions.some((s) => s.track === t.name))
@@ -194,7 +194,7 @@ function DaySection({
               timelineWidth={timelineWidth}
               accent="violet"
               isStarred={isStarred}
-              toggle={toggle}
+              onSessionClick={onSessionClick}
             />
           ))}
         </>
@@ -214,7 +214,7 @@ function DaySection({
               timelineWidth={timelineWidth}
               accent="green"
               isStarred={isStarred}
-              toggle={toggle}
+              onSessionClick={onSessionClick}
             />
           ))}
         </>
@@ -230,7 +230,7 @@ function TrackRow({
   timelineWidth,
   accent,
   isStarred,
-  toggle,
+  onSessionClick,
 }: {
   label: string
   sessions: Session[]
@@ -238,7 +238,7 @@ function TrackRow({
   timelineWidth: number
   accent: 'violet' | 'green'
   isStarred: (id: string) => boolean
-  toggle: (id: string) => void
+  onSessionClick: (session: Session) => void
 }) {
   return (
     <div className="flex items-stretch border-t border-border/60" style={{ height: ROW_HEIGHT }}>
@@ -260,7 +260,7 @@ function TrackRow({
             <button
               key={s.id}
               type="button"
-              onClick={() => toggle(s.id)}
+              onClick={() => onSessionClick(s)}
               title={s.title}
               style={{ left, width, top: 6, height: ROW_HEIGHT - 12 }}
               className={cn(
