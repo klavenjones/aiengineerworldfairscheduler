@@ -54,6 +54,7 @@ fixed inset-0 z-50 flex flex-col bg-background
 ### 4. `src/components/list-view.tsx`
 - Change `px-6` → `px-3 sm:px-6` on outer container for better mobile edge spacing
 - Change `py-6` → `py-4 sm:py-6`
+- **Fix star overflow**: restructure `SessionRow` metadata row so metadata items wrap inside a `flex-1 min-w-0` container and the star button is a separate `shrink-0` element outside it
 
 ---
 
@@ -62,7 +63,7 @@ fixed inset-0 z-50 flex flex-col bg-background
 |------|--------|
 | `src/components/sidebar.tsx` | Add `hidden md:flex` to both aside elements |
 | `src/components/conference-app.tsx` | Add mobile header, search bar, day tabs, filter state, FAB |
-| `src/components/list-view.tsx` | Reduce mobile padding |
+| `src/components/list-view.tsx` | Reduce mobile padding + fix star overflow |
 
 ## File to Create
 | File | Purpose |
