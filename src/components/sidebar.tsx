@@ -1,6 +1,6 @@
 import { ChevronDown, ChevronLeft, Search, Star } from 'lucide-react'
 import { useState } from 'react'
-import { DAYS, TRACK_TAGS_BY_DAY } from '#/lib/sessions'
+import { DAYS, TIME_SLOTS, TRACK_TAGS_BY_DAY } from '#/lib/sessions'
 import { cn } from '#/lib/utils'
 
 type SidebarProps = {
@@ -15,6 +15,8 @@ type SidebarProps = {
   setSelectedDayId: (id: string | null) => void
   selectedTags: Set<string>
   toggleTag: (tag: string) => void
+  selectedTimes: Set<number>
+  toggleTime: (start: number) => void
   collapsed: boolean
   setCollapsed: (v: boolean) => void
 }
@@ -31,6 +33,8 @@ export function Sidebar({
   setSelectedDayId,
   selectedTags,
   toggleTag,
+  selectedTimes,
+  toggleTime,
   collapsed,
   setCollapsed,
 }: SidebarProps) {
@@ -136,6 +140,29 @@ export function Sidebar({
                 )}
               >
                 {day.label}
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Time */}
+        <h2 className="mt-7 text-base font-semibold text-sidebar-foreground">Time</h2>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {TIME_SLOTS.map((slot) => {
+            const active = selectedTimes.has(slot.start)
+            return (
+              <button
+                key={slot.start}
+                type="button"
+                onClick={() => toggleTime(slot.start)}
+                className={cn(
+                  'rounded-md border px-3 py-2 text-sm transition-colors',
+                  active
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-sidebar-border bg-background text-sidebar-foreground hover:bg-sidebar-accent',
+                )}
+              >
+                {slot.startLabel}
               </button>
             )
           })}

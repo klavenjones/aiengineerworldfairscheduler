@@ -1,6 +1,6 @@
 import { ChevronDown, Search, X } from 'lucide-react'
 import { useState } from 'react'
-import { TRACK_TAGS_BY_DAY } from '#/lib/sessions'
+import { TIME_SLOTS, TRACK_TAGS_BY_DAY } from '#/lib/sessions'
 import { cn } from '#/lib/utils'
 
 type MobileFiltersProps = {
@@ -8,6 +8,8 @@ type MobileFiltersProps = {
   setSemantic: (v: boolean) => void
   selectedTags: Set<string>
   toggleTag: (tag: string) => void
+  selectedTimes: Set<number>
+  toggleTime: (start: number) => void
   filteredCount: number
   onClose: () => void
 }
@@ -17,6 +19,8 @@ export function MobileFilters({
   setSemantic,
   selectedTags,
   toggleTag,
+  selectedTimes,
+  toggleTime,
   filteredCount,
   onClose,
 }: MobileFiltersProps) {
@@ -39,7 +43,29 @@ export function MobileFilters({
 
       {/* Scrollable body */}
       <div className="flex-1 overflow-y-auto px-4 py-4">
-        <h3 className="text-base font-semibold text-foreground">Tracks</h3>
+        <h3 className="text-base font-semibold text-foreground">Time</h3>
+        <div className="mt-3 flex flex-wrap gap-2">
+          {TIME_SLOTS.map((slot) => {
+            const active = selectedTimes.has(slot.start)
+            return (
+              <button
+                key={slot.start}
+                type="button"
+                onClick={() => toggleTime(slot.start)}
+                className={cn(
+                  'rounded-md border px-3 py-2 text-sm transition-colors',
+                  active
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-border bg-background text-foreground hover:bg-accent',
+                )}
+              >
+                {slot.startLabel}
+              </button>
+            )
+          })}
+        </div>
+
+        <h3 className="mt-6 text-base font-semibold text-foreground">Tracks</h3>
 
         {/* Track search */}
         <div className="relative mt-3">

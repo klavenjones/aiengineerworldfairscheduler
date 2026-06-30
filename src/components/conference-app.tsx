@@ -26,6 +26,7 @@ export function ConferenceApp() {
   const [starredOnly, setStarredOnly] = useState(false)
   const [selectedDayId, setSelectedDayId] = useState<string | null>(null)
   const [selectedTags, setSelectedTags] = useState<Set<string>>(new Set())
+  const [selectedTimes, setSelectedTimes] = useState<Set<number>>(new Set())
   const [collapsed, setCollapsed] = useState(false)
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   const [mapOpen, setMapOpen] = useState(false)
@@ -37,6 +38,15 @@ export function ConferenceApp() {
       const next = new Set(prev)
       if (next.has(tag)) next.delete(tag)
       else next.add(tag)
+      return next
+    })
+  }
+
+  function toggleTime(start: number) {
+    setSelectedTimes((prev) => {
+      const next = new Set(prev)
+      if (next.has(start)) next.delete(start)
+      else next.add(start)
       return next
     })
   }
@@ -55,9 +65,10 @@ export function ConferenceApp() {
         const matches = selectedTags.has(s.track) || s.tags.some((t) => selectedTags.has(t))
         if (!matches) return false
       }
+      if (selectedTimes.size > 0 && !selectedTimes.has(s.start)) return false
       return true
     })
-  }, [search, selectedDayId, starredOnly, selectedTags, isStarred])
+  }, [search, selectedDayId, starredOnly, selectedTags, selectedTimes, isStarred])
 
   const gridDay =
     DAYS.find((d) => d.id === selectedDayId) ??
@@ -78,6 +89,8 @@ export function ConferenceApp() {
         setSelectedDayId={setSelectedDayId}
         selectedTags={selectedTags}
         toggleTag={toggleTag}
+        selectedTimes={selectedTimes}
+        toggleTime={toggleTime}
         collapsed={collapsed}
         setCollapsed={setCollapsed}
       />
@@ -312,6 +325,8 @@ export function ConferenceApp() {
           setSemantic={setSemantic}
           selectedTags={selectedTags}
           toggleTag={toggleTag}
+          selectedTimes={selectedTimes}
+          toggleTime={toggleTime}
           filteredCount={filtered.length}
           onClose={() => setMobileFiltersOpen(false)}
         />
